@@ -2,5 +2,17 @@
     {
         "license":"MIT",
         "link":"https://spdx.org/licenses/MIT.html"
+    },
+    {
+        "license":"GNU",
+        "link":"https://spdx.org/licenses/GPL-3.0-or-later.html"
+    },
+    {
+        "license":"Apache",
+        "link":"https://spdx.org/licenses/Apache-2.0.html"
+    },
+    {
+        "license":"ISC",
+        "link":"https://spdx.org/licenses/ISC.html"
     }
 ]

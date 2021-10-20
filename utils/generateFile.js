@@ -9,7 +9,6 @@ function writeTitle (resp) {
             console.log(error)
         }
     })
-    console.log("Title Written")
 }
 
 function writeLicenseBadge (resp) {
@@ -20,7 +19,6 @@ function writeLicenseBadge (resp) {
             console.log(error)
         }
     })
-    console.log("License Written")
 }
 
 function writeDescription (resp) {
@@ -31,7 +29,6 @@ function writeDescription (resp) {
             console.log(error)
         }
     })
-    console.log("Description Written")
 }
 
 function writeTableOfContents (resp) {
@@ -43,7 +40,6 @@ function writeTableOfContents (resp) {
         }
     })
     tableOfContentSelection(resp)
-    console.log("Table of Contents Written")
 }
 
 function tableOfContentSelection (resp) {
@@ -66,7 +62,6 @@ function writeInstall (resp) {
             console.log(error)
         }
     })
-    console.log("Install Written")
 }
 
 function writeUsageTitle (resp) {
@@ -170,6 +165,16 @@ function writeTests (resp) {
     })
 }
 
+function writeQuestions (resp) {
+    fs.appendFile('./dist/README.md',
+    `## Questions  \nIf you have any questions you can contact me directly at ${resp.useremail}. You can also find more of my work on GitHub at [${resp.github}](https://github.com/${resp.github})`,
+    function (error) {
+        if (error) {
+            console.log(error)
+        }
+    })
+}
+
 module.exports = {
     writeTitle,
     writeLicenseBadge,
@@ -183,4 +188,5 @@ module.exports = {
     writeLicenseInfo,
     writeContribute,
     writeTests,
+    writeQuestions,
 }

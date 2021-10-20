@@ -41,7 +41,7 @@ function license () {
                             type: "list",
                             message: "Please choose a license for your application.",
                             name: "license",
-                            choices: ['MIT', 'GNU', 'Apache', 'ISC', 'BSD']
+                            choices: ['MIT', 'GNU', 'Apache', 'ISC']
                         }
                     ]).then(licenseAns => {
                         licenseGen = true
@@ -338,6 +338,13 @@ function questions () {
                 type: "input",
                 message: "What is your email address?",
                 name: "useremail"
+            },
+            {
+                type: "input",
+                message: "What is your GitHub username?",
+                name: "github"
             }
-        ])
+        ]).then(questionsAns => {
+            generateFile.writeQuestions(questionsAns)
+        })
 }
