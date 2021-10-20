@@ -245,8 +245,37 @@ function credits () {
 function licenseInfo (a, b) {
     if (a) {
         generateFile.writeLicenseInfo(b)
+        contribute()
     }
     else {
-        console.log(false)
+        contribute()
     }
+}
+
+function contribute () {
+    inquier
+        .prompt([
+            {
+                type: "list",
+                message: "Would you like to include a Contribution section?",
+                name: "contribChoice",
+                choices: ["Yes","No"]
+            }
+        ]).then(contribChoiceAns => {
+            if (contribChoiceAns.contribChoice === "No") {
+                console.log(contribChoiceAns.contribChoice)
+            }
+            else {
+                inquier
+                    .prompt([
+                        {
+                            type: "input",
+                            message: "How can people contribute?",
+                            name: "contribute"
+                        }
+                    ]).then(contributeAns => {
+                        generateFile.writeContribute(contributeAns)
+                    })
+            }
+        })
 }

@@ -49,7 +49,7 @@ function writeTableOfContents (resp) {
 function tableOfContentSelection (resp) {
     for (let i = 0; i < resp.tableOfContents.length; i++) {
         fs.appendFile('./dist/README.md',
-        `- [${resp.tableOfContents[i]}](#${resp.tableOfContents[i]})\n`,
+        `- [${resp.tableOfContents[i]}](#${resp.tableOfContents[i].toLowerCase()})\n`,
         function (error) {
             if (error) {
                 console.log(error)
@@ -113,17 +113,42 @@ function writeCredits (resp) {
 }
 
 function writeLicenseInfo (resp) {
+    const licenseArray = []
     for (let i = 0; i < licenseData.length; i++) {
-        if (resp === licenseData[i].license) {
-            fs.appendFile('./dist/README.md',
-            `## License\n${licenseData[i].text}\n`,
-            function (error) {
-                if (error) {
-                    console.log(error)
-                }
-            })
+        licenseArray.push(licenseData[i].license)
+    }
+    if (licenseArray.includes(resp)) {
+        for (let i = 0; i < licenseData.length; i++) {
+            if (resp === licenseData[i].license) {
+                fs.appendFile('./dist/README.md',
+                `## License\nThis Product is licensed under the ${licenseData[i].license} license.  \nFor more information please visit: ${licenseData[i].link}\n`,
+                function (error) {
+                    if (error) {
+                        console.log(error)
+                    }
+                })
+            }
         }
     }
+    else {
+        fs.appendFile('./dist/README.md',
+        `## License\nThis Product is licensed under the ${resp} license.\n`,
+        function (error) {
+            if (error) {
+                console.log(error)
+            }
+        })
+    }
+}
+
+function writeContribute (resp) {
+    fs.appendFile('./dist/README.md',
+    `## How to Contribute  \n${resp.contribute}\n`,
+    function (error) {
+        if (error) {
+            console.log(error)
+        }
+    })
 }
 
 module.exports = {
@@ -137,4 +162,5 @@ module.exports = {
     writeUsageScreenshot,
     writeCredits,
     writeLicenseInfo,
+    writeContribute,
 }
