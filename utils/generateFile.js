@@ -104,12 +104,21 @@ function writeUsageScreenshot () {
 
 function writeCredits (resp) {
     fs.appendFile('./dist/README.md',
-    `## Credits\n${resp.username} - [GitHub Profile](https://github.com/${resp.github})\n`,
+    `## Credits\n`,
     function (error) {
         if (error) {
             console.log(error)
         }
     })
+    for (let i = 0; i < resp.length; i++) {
+        fs.appendFile('./dist/README.md',
+        `${resp[i].username} - [GitHub Profile](https://github.com/${resp[i].github})  \n`,
+        function (error) {
+            if (error) {
+                console.log(error)
+            }
+        })
+    }
 }
 
 function writeLicenseInfo (resp) {
@@ -151,6 +160,16 @@ function writeContribute (resp) {
     })
 }
 
+function writeTests (resp) {
+    fs.appendFile('./dist/README.md',
+    `## Tests  \n${resp.tests}\n`,
+    function (error) {
+        if (error) {
+            console.log(error)
+        }
+    })
+}
+
 module.exports = {
     writeTitle,
     writeLicenseBadge,
@@ -163,4 +182,5 @@ module.exports = {
     writeCredits,
     writeLicenseInfo,
     writeContribute,
+    writeTests,
 }

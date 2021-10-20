@@ -3,6 +3,7 @@ const inquier = require("inquirer")
 const generateFile = require("./utils/generateFile")
 let licenseGen = false
 let licenseVar = ""
+const creditsArray = []
 
 title()
 
@@ -222,24 +223,44 @@ function credits () {
                 licenseInfo(licenseGen, licenseVar)
             }
             else {
-                inquier
-                    .prompt([
-                        {
-                            type: "input",
-                            message: "What is your name?",
-                            name: "username"
-                        },
-                        {
-                            type: "input",
-                            message: "What is your GitHub username?",
-                            name: "github"
-                        }
-                    ]).then(creditAns => {
-                        generateFile.writeCredits(creditAns)
-                        licenseInfo(licenseGen, licenseVar)
-                    })
+                creditsAdd()
             }
         })
+}
+
+function creditsAdd () {
+    inquier
+    .prompt([
+        {
+            type: "input",
+            message: "What is the name?",
+            name: "username"
+        },
+        {
+            type: "input",
+            message: "What is their GitHub username?",
+            name: "github"
+        }
+    ]).then(creditAns => {
+        creditsArray.push(creditAns)
+        inquier
+            .prompt([
+                {
+                    type: "list",
+                    message: "Do you want to add someone else?",
+                    name: "creditsAdd",
+                    choices: ["Yes","No"]
+                }
+            ]).then(creditsAddAns => {
+                if (creditsAddAns.creditsAdd === "Yes") {
+                    creditsAdd()
+                }
+                else {
+                    generateFile.writeCredits(creditsArray)
+                    licenseInfo(licenseGen, licenseVar)
+                }
+            })
+    })
 }
 
 function licenseInfo (a, b) {
@@ -263,7 +284,7 @@ function contribute () {
             }
         ]).then(contribChoiceAns => {
             if (contribChoiceAns.contribChoice === "No") {
-                console.log(contribChoiceAns.contribChoice)
+                tests()
             }
             else {
                 inquier
@@ -275,7 +296,48 @@ function contribute () {
                         }
                     ]).then(contributeAns => {
                         generateFile.writeContribute(contributeAns)
+                        tests()
                     })
             }
         })
+}
+
+function tests () {
+    inquier
+        .prompt([
+            {
+                type: "list",
+                message: "Would you like to add a Tests section?",
+                name: "testsChoice",
+                choices: ["Yes","No"]
+            }
+        ]).then(testsChoiceAns => {
+            if (testsChoiceAns.testsChoice === "No") {
+                questions()
+            }
+            else {
+                inquier
+                    .prompt([
+                        {
+                            type: "input",
+                            message: "How can someone test the build?",
+                            name: "tests"
+                        }
+                    ]).then(testsAns => {
+                        generateFile.writeTests(testsAns)
+                        questions()
+                    })
+            }
+        })
+}
+
+function questions () {
+    inquier
+        .prompt([
+            {
+                type: "input",
+                message: "What is your email address?",
+                name: "useremail"
+            }
+        ])
 }
